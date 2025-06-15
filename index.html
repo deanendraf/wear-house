@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wear House</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- My Style -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <!-- AlpineJS -->
+     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+     
+     <!-- App -->
+      <script src="src/app.js" async></script>
+    </head>
+
+    <!-- Midtrans -->
+     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-Swqy6Fmux1cNZ8qL"></script>
+
+  <body>
+
+    <!-- Navbar Start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Wear <span>House</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#collaboration">Collaboration</a>
+        <a href="#product">Produk</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span class="quantity-badge" x-show="$store.cart.quantity"x-text="$store.cart.quantity"></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- Search Form Start -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="Search here..." />
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      <!-- Search Form End -->
+
+      <!-- Shopping Cart Start -->
+       <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+        <div class="cart-item">
+          <img :src="`img/products/${item.img}`" :alt="item.name">
+          <div class="item-detail">
+            <h3 x-text="item.name"></h3>
+            <div class="item-price">
+              <span x-text="rupiah(item.price)"></span> &times;
+              <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+              <span x-text="item.quantity"></span>
+              <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+              <span x-text="rupiah(item.total)"></span>
+            </div>
+          </div>
+        </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">Cart is Empty</h4>
+        <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+       
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutForm">
+            <input type="hidden" name="items" x-model="JSON.stringify($store.cart.items)">
+            <input type="hidden" name="total" x-model="$store.cart.total">
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name">
+            </label>
+
+            <label for="email">
+              <span>Email</span>
+              <input type="text" name="email" id="email">
+            </label>
+
+            <label for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone" autocomplete="off">
+            </label>
+
+            <button
+              class="checkout-button disabled"
+              type="submit"
+              id="checkout-button"
+              value="checkout"
+              disabled
+            >
+              Checkout
+            </button>
+          </form>
+        </div>
+      </div>  
+      <!-- Shopping Cart End -->
+
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Hero Section Start-->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mari Belanja Di</h1>
+        <h1><div class="wear">Wear <span class="house">House</span></h1>
+        <p>
+          Where Street Meets Statement.
+        </p>
+        <!-- <a href="#" class="cta">Beli Sekarang</a> -->
+      </main>
+    </section>
+    <!-- Hero Section End-->
+
+    <!-- About Section Start -->
+    <section id="about" class="about">
+      <h2><span>Tentang Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/tentang-kami.jpg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa memilih <span class="wearcontent">Wear </span><span class="housecontent"> House?</span></h3>
+          <p>
+            Kami menyediakan produk dengan kualitas terbaik, bahan nyaman, dan desain terbaru yang mengikuti tren mode terkini. Setiap baju dipilih dengan cermat agar kamu tampil percaya diri dan gaya setiap saat.
+          </p>
+          <p>
+            Kami juga menawarkan pelayanan cepat dan ramah, serta harga yang kompetitif untuk memastikan kamu mendapatkan nilai lebih dari setiap pembelian.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Collaboration Section Start -->
+    <section class="collaboration" id="collaboration">
+      <main class="content">
+        <h2>MARK YOUR CALENDAR</h2>
+        <h3>July 25 - Only at <span class="wearsoon">Wear </span><span class="housesoon"> House</span></h3>
+      </main>
+    </section>
+    <!-- Collaboration Section End -->
+
+    <!-- Product Section Start -->
+    <section class="products" id="product" x-data="products">
+      <h2><span>Produk Kami</span></h2>
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+        <div class="product-card">
+          <div class="product-icons">
+            <a href="#" @click.prevent="$store.cart.add(item)">
+              <svg
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#shopping-cart" />
+              </svg>
+            </a>
+          </div>
+          <div class="product-image">
+            <img :src="`img/products/${item.img}`" :alt="item.name" />
+          </div>
+          <div class="product-content">
+            <h3 x-text="item.name"></h3>
+            <div class="product-stars">
+              <svg
+                width="24"
+                height="24"
+                fill="yellow"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                fill="yellow"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                fill="yellow"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                fill="yellow"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#star" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                fill="yellow"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use href="img/feather-sprite.svg#star" />
+              </svg>
+            </div>
+            <div class="product-price"x-text="rupiah(item.price)"></div>
+          </div>
+        </div>
+        </template>
+      </div>
+    </section>
+    <!-- Product Section End -->
+
+<!-- Contact Section Start -->
+<section id="contact" class="contact">
+  <h2><span>Kontak Kami</span></h2>
+  <p>Punya pertanyaan atau butuh bantuan?</p>
+
+  <div class="row">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.2872178793677!2d106.83343649999999!3d-6.356856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec3c53dfed75%3A0xad5f6ba586fc5d5e!2sCampus%20D2%20Of%20BSI%20Margonda%20Depok!5e0!3m2!1sen!2sid!4v1747212528423!5m2!1sen!2sid"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      class="map"
+    ></iframe>
+
+    <!-- Uncomment jika form ingin diaktifkan
+    <form action="">
+      <div class="input-group">
+        <i data-feather="user"></i>
+        <input type="text" placeholder="Nama" />
+      </div>
+      <div class="input-group">
+        <i data-feather="mail"></i>
+        <input type="text" placeholder="E-Mail" />
+      </div>
+      <div class="input-group">
+        <i data-feather="phone"></i>
+        <input type="text" placeholder="No Handphone" />
+      </div>
+      <button type="submit" class="btn">KIRIM PESAN</button>
+    </form>
+    -->
+  </div>
+
+  <!-- Profile Creator -->
+  <div class="container swiper">
+    <div class="slider-wrapper">
+      <div class="card-list swiper-wrapper">
+
+        <!-- Profile 1 -->
+        <div class="card-item swiper-slide">
+          <img src="img/creator/img-1.jpg" alt="User Image" class="user-image" />
+          <h2 class="user-name">Deanendra Favian Ardiputra</h2>
+          <a href="https://wa.me/6285694520082"
+          target="_blank"
+          class="message-button"
+          >
+            Message
+          </a>
+        </div>
+
+        <!-- Profile 2 -->
+        <div class="card-item swiper-slide">
+          <img src="img/creator/img-2.jpg" alt="User Image" class="user-image" />
+          <h2 class="user-name">Pritta Concetta Pramono</h2>
+          <a href="https://wa.me/6282122829913"
+          target="_blank"
+          class="message-button"
+          >
+            Message
+          </a>
+        </div>
+
+        <!-- Profile 3 -->
+        <div class="card-item swiper-slide">
+          <img src="img/creator/img-3.jpg" alt="User Image" class="user-image" />
+          <h2 class="user-name">Ina Syahnia</h2>
+          <a href="https://wa.me/6285717214948"
+          target="_blank"
+          class="message-button"
+          >
+            Message
+          </a>
+        </div>
+
+        <!-- Profile 4 -->
+        <div class="card-item swiper-slide">
+          <img src="img/creator/img-4.jpg" alt="User Image" class="user-image" />
+          <h2 class="user-name">Maulana Ahmad Bukhori</h2>
+          <a href="https://wa.me/6281906342985"
+          target="_blank"
+          class="message-button"
+          >
+            Message
+          </a>
+        </div>
+
+        <!-- Profile 5 -->
+        <div class="card-item swiper-slide">
+          <img src="img/creator/img-5.jpg" alt="User Image" class="user-image" />
+          <h2 class="user-name">Muhamad Hilmi Sabil</h2>
+          <a href="https://wa.me/6285694970427"
+          target="_blank"
+          class="message-button"
+          >
+            Message
+          </a>
+        </div>
+
+      </div>
+
+      <div class="swiper-pagination"></div>
+      <div class="swiper-slide-button swiper-button-prev"></div>
+      <div class="swiper-slide-button swiper-button-next"></div>
+    </div>
+  </div>
+  
+</section>
+
+        
+      </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Footer Start -->
+    <footer>
+      <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="phone"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div>
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#collaboration">Collaboration</a>
+        <a href="#product">Produk</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="credit">
+        <p>Created by <a href="">Kelompok 2</a>. | &copy; 2025.</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Modal Box Item Detail Start -->
+     <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/products/1.png" alt="Product 1">
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis cumque dolores nisi ducimus iusto dolore eligendi, similique officiis dicta animi dolor mollitia accusantium, excepturi iste?</p>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div class="product-price">IDR 120K</div>
+            <a href="#"><i data-feather="shopping-cart"></i> <span>Add to Cart</span></a>
+          </div>
+        </div>
+      </div>
+     </div>
+    <!-- Modal Box Item Detail End -->
+
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- Linking SwiperJS script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+
+
+  </body>
+</html>
